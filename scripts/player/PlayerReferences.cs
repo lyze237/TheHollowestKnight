@@ -5,7 +5,7 @@ namespace TheHollowestKnight.scripts.player;
 
 public partial class PlayerReferences : CharacterBody3D
 {
-    [Export] public components.PlayerInputComponent Input { get; private set; }
+    [Export] public PlayerInputComponent Input { get; private set; }
     [Export] public Node3D Pivot { get; private set; }
     [Export] public Node3D Knight { get; private set; }
     [Export] public PlayerGravityComponent Gravity { get; private set; }

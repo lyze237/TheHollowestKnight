@@ -19,7 +19,7 @@ public partial class PlayerDashState : PlayerAbilityState
         Player.Gravity.ApplyGravity = false;
         Player.Slowdown.ApplySlowdown = false;
         
-        dashDirection = (Player.Transform.Basis * new Vector3(Player.Input.Direction.X, 0, Player.Input.Direction.Y)).Normalized();
+        dashDirection = (Player.Transform.Basis * new Vector3(Player.Input.LastNonNullDirection.X, 0, Player.Input.LastNonNullDirection.Y)).Normalized();
         
         startTime = Time.GetTicksMsec();
     }

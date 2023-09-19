@@ -4,6 +4,7 @@ namespace TheHollowestKnight.scripts.player.components;
 
 public partial class PlayerInputComponent : Component
 {
+	public Vector2 LastNonNullDirection { get; private set; }
     public Vector2 Direction { get; private set; }
     public Vector2I IntDirection { get; private set; }
 
@@ -18,6 +19,9 @@ public partial class PlayerInputComponent : Component
 		Direction = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
         IntDirection = new Vector2I(Mathf.RoundToInt(IntDirection.X), Mathf.RoundToInt(IntDirection.Y));
 
+        if (Direction is not { X: 0, Y: 0 })
+	        LastNonNullDirection = Direction;
+        
         DashJustPressed = Input.IsActionJustPressed("dash");
         DashPressed = Input.IsActionPressed("dash");
         
