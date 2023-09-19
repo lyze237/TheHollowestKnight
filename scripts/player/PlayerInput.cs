@@ -19,9 +19,9 @@ public partial class PlayerInput : Node
         IntDirection = new Vector2I(Mathf.RoundToInt(IntDirection.X), Mathf.RoundToInt(IntDirection.Y));
 
         DashJustPressed = Input.IsActionJustPressed("dash");
-        DashJustPressed = Input.IsActionPressed("dash");
+        DashPressed = Input.IsActionPressed("dash");
         
         JumpJustPressed = Input.IsActionJustPressed("jump");
-        JumpJustPressed = Input.IsActionPressed("jump");
+        JumpPressed = Input.IsActionPressed("jump");
     }
 }

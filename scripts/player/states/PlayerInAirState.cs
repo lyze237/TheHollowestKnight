@@ -21,6 +21,8 @@ public partial class PlayerInAirState : GravityState
         
         if (Player.IsOnFloor())
             StateMachine.ChangeState<PlayerLandState>();
+        else if (Player.Input.DashJustPressed && StateMachine.Get<PlayerDashState>().CheckIfCanDash())
+            StateMachine.ChangeState<PlayerDashState>();
         
         var velocity = Player.Velocity;
 

@@ -17,5 +17,7 @@ public abstract partial class GroundedState : GravityState
 			StateMachine.ChangeState<PlayerJumpState>();
 		else if (!Player.IsOnFloor())
 			StateMachine.ChangeState<PlayerInAirState>();
+		else if (Player.Input.DashJustPressed && StateMachine.Get<PlayerDashState>().CheckIfCanDash())
+			StateMachine.ChangeState<PlayerDashState>();
 	}
 }

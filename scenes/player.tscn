@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bbp7clt0ij1k4"]
+[gd_scene load_steps=13 format=3 uid="uid://bbp7clt0ij1k4"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerReferences.cs" id="1_wx3ag"]
 [ext_resource type="PackedScene" uid="uid://c3ph6y27qlvmj" path="res://models/knight/knight.glb" id="2_qiai3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/player/states/PlayerMoveState.cs" id="6_fkl1y"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerJumpState.cs" id="7_p2oir"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerInAirState.cs" id="8_hplsf"]
+[ext_resource type="Script" path="res://scripts/player/states/PlayerDashState.cs" id="9_8o2d8"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerLandState.cs" id="9_abfbj"]
 [ext_resource type="Script" path="res://scripts/player/components/PlayerRotateToDirection.cs" id="10_d0su2"]
 
@@ -17,7 +18,7 @@ height = 1.94642
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Input", "Pivot", "Knight")]
 script = ExtResource("1_wx3ag")
-Input = NodePath("Input")
+Input = NodePath("Components/Input")
 Pivot = NodePath("Pivot")
 Knight = NodePath("Pivot/Knight")
 
@@ -34,9 +35,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98038, 0)
 shape = SubResource("CapsuleShape3D_qwrb5")
-
-[node name="Input" type="Node" parent="."]
-script = ExtResource("5_ood2k")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "initialState", "debugLabel")]
 script = ExtResource("3_b0s73")
@@ -59,7 +57,13 @@ script = ExtResource("8_hplsf")
 [node name="Land" type="Node" parent="StateMachine"]
 script = ExtResource("9_abfbj")
 
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("9_8o2d8")
+
 [node name="Components" type="Node" parent="."]
+
+[node name="Input" type="Node" parent="Components"]
+script = ExtResource("5_ood2k")
 
 [node name="RotateToDirection" type="Node" parent="Components" node_paths=PackedStringArray("player")]
 script = ExtResource("10_d0su2")

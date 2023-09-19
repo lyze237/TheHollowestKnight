@@ -4,6 +4,11 @@ public abstract partial class PlayerAbilityState : GravityState
 {
     public bool IsAbilityDone { get; protected set; }
 
+    protected override void OnEnable()
+    {
+        IsAbilityDone = false;
+    }
+
     protected override void PhysicsProcess(float delta)
     {
         base.PhysicsProcess(delta);

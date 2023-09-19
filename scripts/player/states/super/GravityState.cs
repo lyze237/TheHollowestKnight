@@ -11,9 +11,13 @@ public abstract partial class GravityState : State
     [Export] private float slowDownSpeed = 10f;
     [Export] private float lookAtSpeed = 10f;
 
+    public bool ApplyGravity { get; protected set; } = true;
+
     protected override void PhysicsProcess(float delta)
     {
-        DoGravity(delta);
+        if (ApplyGravity)
+            DoGravity(delta);
+        
         DoSlowdown(delta);
     }
 
