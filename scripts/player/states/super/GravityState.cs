@@ -16,9 +16,10 @@ public abstract partial class GravityState : State
     protected override void PhysicsProcess(float delta)
     {
         if (ApplyGravity)
+        {
             DoGravity(delta);
-        
-        DoSlowdown(delta);
+            DoSlowdown(delta);
+        }
     }
 
     private void DoGravity(float delta)
