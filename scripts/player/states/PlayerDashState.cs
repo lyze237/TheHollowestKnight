@@ -5,6 +5,8 @@ namespace TheHollowestKnight.scripts.player.states;
 
 public partial class PlayerDashState : PlayerAbilityState
 {
+    [Export] private GpuParticles3D particles;
+    
     [Export] private float dashCooldown = 600f;
     [Export] private ulong dashTime = 150;
     [Export] private float dashSpeed = 20f;
@@ -22,12 +24,16 @@ public partial class PlayerDashState : PlayerAbilityState
         dashDirection = (Player.Transform.Basis * new Vector3(Player.Input.LastNonNullDirection.X, 0, Player.Input.LastNonNullDirection.Y)).Normalized();
         
         startTime = Time.GetTicksMsec();
+
+        particles.Emitting = true;
     }
 
     protected override void OnDisable()
     {
         Player.Gravity.ApplyGravity = true;
         Player.Slowdown.ApplySlowdown = true;
+        
+        particles.Emitting = false;
     }
 
     protected override void PhysicsProcess(float delta)
