@@ -9,10 +9,18 @@ public partial class PlayerDashState : PlayerAbilityState
     
     [Export] private float dashCooldown = 600f;
     [Export] private ulong dashTime = 150;
-    [Export] private float dashSpeed = 20f;
+    [Export] private float dashSpeed = 30f;
 
     private Vector3 dashDirection;
     private ulong startTime;
+
+    private MeshInstance3D characterMesh;
+    [Export] private Material headBlackMaterial;
+    
+    public override void _Ready()
+    {
+        characterMesh = Player.Knight.GetNode<MeshInstance3D>("Armature/Skeleton3D/Head_2/Head_2");
+    }
 
     protected override void OnEnable()
     {
@@ -26,6 +34,8 @@ public partial class PlayerDashState : PlayerAbilityState
         startTime = Time.GetTicksMsec();
 
         particles.Emitting = true;
+        
+        characterMesh.SetSurfaceOverrideMaterial(0, headBlackMaterial);
     }
 
     protected override void OnDisable()
@@ -34,6 +44,8 @@ public partial class PlayerDashState : PlayerAbilityState
         Player.Slowdown.ApplySlowdown = true;
         
         particles.Emitting = false;
+        
+        characterMesh.SetSurfaceOverrideMaterial(0, null);
     }
 
     protected override void PhysicsProcess(float delta)

@@ -5,13 +5,8 @@ namespace TheHollowestKnight.scripts.stateMachine;
 
 public abstract partial class State : Node
 {
-    protected StateMachine StateMachine { get; private set; }
+    protected StateMachine StateMachine => GetParent() as StateMachine;
     protected PlayerReferences Player => StateMachine.Player;
-
-    public override void _Ready()
-    {
-        StateMachine = GetParent() as StateMachine;
-    }
 
     public void Enable()
     {

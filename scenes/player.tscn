@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbp7clt0ij1k4"]
+[gd_scene load_steps=22 format=3 uid="uid://bbp7clt0ij1k4"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerReferences.cs" id="1_wx3ag"]
 [ext_resource type="PackedScene" uid="uid://c3ph6y27qlvmj" path="res://models/knight/knight.glb" id="2_qiai3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/player/states/PlayerInAirState.cs" id="8_hplsf"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerDashState.cs" id="9_8o2d8"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerLandState.cs" id="9_abfbj"]
+[ext_resource type="Material" uid="uid://cjuj5bllljtoq" path="res://models/knight/materials/HeadBlack.tres" id="11_f1a01"]
 [ext_resource type="Script" path="res://scripts/player/components/PlayerRotateToDirectionComponent.cs" id="12_7j1ep"]
 [ext_resource type="Script" path="res://scripts/player/components/PlayerGravityComponent.cs" id="12_78gf2"]
 [ext_resource type="Script" path="res://scripts/player/components/PlayerSlowdownComponent.cs" id="13_b4fhh"]
@@ -61,7 +62,7 @@ orientation = 2
 script = ExtResource("1_wx3ag")
 Input = NodePath("BeforeComponents/Input")
 Pivot = NodePath("Pivot")
-Knight = NodePath("Pivot/Knight")
+Knight = NodePath("Pivot/knight")
 Gravity = NodePath("AfterComponents/Gravity")
 Slowdown = NodePath("AfterComponents/Slowdown")
 
@@ -72,7 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.05297, 0)
 pixel_size = 0.01
 text = "Hewwo"
 
-[node name="Knight" parent="Pivot" instance=ExtResource("2_qiai3")]
+[node name="knight" parent="Pivot" instance=ExtResource("2_qiai3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -108,7 +109,8 @@ script = ExtResource("9_abfbj")
 
 [node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("particles")]
 script = ExtResource("9_8o2d8")
-particles = NodePath("../../GPUParticles3D")
+particles = NodePath("../../DashParticles")
+headBlackMaterial = ExtResource("11_f1a01")
 
 [node name="AfterComponents" type="Node" parent="."]
 
@@ -124,10 +126,11 @@ Player = NodePath("../..")
 script = ExtResource("13_b4fhh")
 Player = NodePath("../..")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="DashParticles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21694, 0)
-amount = 300
-lifetime = 2.0
+emitting = false
+amount = 100
+lifetime = 0.4
 preprocess = 0.02
 speed_scale = 0.75
 randomness = 0.15
