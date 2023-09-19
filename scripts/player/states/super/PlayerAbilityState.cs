@@ -1,6 +1,8 @@
-﻿namespace TheHollowestKnight.scripts.player.states.super;
+﻿using TheHollowestKnight.scripts.stateMachine;
 
-public abstract partial class PlayerAbilityState : GravityState
+namespace TheHollowestKnight.scripts.player.states.super;
+
+public abstract partial class PlayerAbilityState : State
 {
     public bool IsAbilityDone { get; protected set; }
 
@@ -11,8 +13,6 @@ public abstract partial class PlayerAbilityState : GravityState
 
     protected override void PhysicsProcess(float delta)
     {
-        base.PhysicsProcess(delta);
-
         if (!IsAbilityDone)
             return;
 

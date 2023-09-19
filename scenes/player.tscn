@@ -1,26 +1,30 @@
-[gd_scene load_steps=13 format=3 uid="uid://bbp7clt0ij1k4"]
+[gd_scene load_steps=15 format=3 uid="uid://bbp7clt0ij1k4"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerReferences.cs" id="1_wx3ag"]
 [ext_resource type="PackedScene" uid="uid://c3ph6y27qlvmj" path="res://models/knight/knight.glb" id="2_qiai3"]
 [ext_resource type="Script" path="res://scripts/stateMachine/StateMachine.cs" id="3_b0s73"]
+[ext_resource type="Script" path="res://scripts/player/components/PlayerInputComponent.cs" id="3_bwtbl"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerIdleState.cs" id="4_7q7gb"]
-[ext_resource type="Script" path="res://scripts/player/PlayerInput.cs" id="5_ood2k"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerMoveState.cs" id="6_fkl1y"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerJumpState.cs" id="7_p2oir"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerInAirState.cs" id="8_hplsf"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerDashState.cs" id="9_8o2d8"]
 [ext_resource type="Script" path="res://scripts/player/states/PlayerLandState.cs" id="9_abfbj"]
-[ext_resource type="Script" path="res://scripts/player/components/PlayerRotateToDirection.cs" id="10_d0su2"]
+[ext_resource type="Script" path="res://scripts/player/components/PlayerRotateToDirectionComponent.cs" id="12_7j1ep"]
+[ext_resource type="Script" path="res://scripts/player/components/PlayerGravityComponent.cs" id="12_78gf2"]
+[ext_resource type="Script" path="res://scripts/player/components/PlayerSlowdownComponent.cs" id="13_b4fhh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwrb5"]
 radius = 0.210656
 height = 1.94642
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Input", "Pivot", "Knight")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Input", "Pivot", "Knight", "Gravity", "Slowdown")]
 script = ExtResource("1_wx3ag")
-Input = NodePath("Components/Input")
+Input = NodePath("BeforeComponents/Input")
 Pivot = NodePath("Pivot")
 Knight = NodePath("Pivot/Knight")
+Gravity = NodePath("AfterComponents/Gravity")
+Slowdown = NodePath("AfterComponents/Slowdown")
 
 [node name="Pivot" type="Node3D" parent="."]
 
@@ -35,6 +39,12 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98038, 0)
 shape = SubResource("CapsuleShape3D_qwrb5")
+
+[node name="BeforeComponents" type="Node" parent="."]
+
+[node name="Input" type="Node" parent="BeforeComponents" node_paths=PackedStringArray("Player")]
+script = ExtResource("3_bwtbl")
+Player = NodePath("../..")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "initialState", "debugLabel")]
 script = ExtResource("3_b0s73")
@@ -60,11 +70,16 @@ script = ExtResource("9_abfbj")
 [node name="Dash" type="Node" parent="StateMachine"]
 script = ExtResource("9_8o2d8")
 
-[node name="Components" type="Node" parent="."]
+[node name="AfterComponents" type="Node" parent="."]
 
-[node name="Input" type="Node" parent="Components"]
-script = ExtResource("5_ood2k")
+[node name="Gravity" type="Node" parent="AfterComponents" node_paths=PackedStringArray("Player")]
+script = ExtResource("12_78gf2")
+Player = NodePath("../..")
 
-[node name="RotateToDirection" type="Node" parent="Components" node_paths=PackedStringArray("player")]
-script = ExtResource("10_d0su2")
-player = NodePath("../..")
+[node name="RotateToDirection" type="Node" parent="AfterComponents" node_paths=PackedStringArray("Player")]
+script = ExtResource("12_7j1ep")
+Player = NodePath("../..")
+
+[node name="Slowdown" type="Node" parent="AfterComponents" node_paths=PackedStringArray("Player")]
+script = ExtResource("13_b4fhh")
+Player = NodePath("../..")

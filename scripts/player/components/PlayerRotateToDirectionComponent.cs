@@ -2,25 +2,24 @@ using Godot;
 
 namespace TheHollowestKnight.scripts.player.components;
 
-public partial class PlayerRotateToDirection : Node
+public partial class PlayerRotateToDirectionComponent : Component
 {
-	[Export] private PlayerReferences player;
 	[Export] private float speed = 10f;
 
 	private Vector3 lookDir = Vector3.Zero;
 	private Vector2 lastNonNullDirection = Vector2.Up;
 
-	public override void _PhysicsProcess(double delta)
+	protected override void PhysicsProcess(float delta)
 	{
-		var lookAtRotationRad = player.Pivot.Rotation.Y;
+		var lookAtRotationRad = Player.Pivot.Rotation.Y;
 
 		var targetLookAt = CalculateTargetLookAt();
 		var targetLookAtRad = targetLookAt.SignedAngleTo(Vector3.Forward, Vector3.Down);
 
 		var rotatedAngle = Mathf.LerpAngle(lookAtRotationRad, targetLookAtRad, delta * speed);
-		var deltaAngle = (float)(rotatedAngle - lookAtRotationRad);
+		var deltaAngle = rotatedAngle - lookAtRotationRad;
 		
-		player.Pivot.Rotate(Vector3.Up, deltaAngle);
+		Player.Pivot.Rotate(Vector3.Up, deltaAngle);
 	}
 
 	private Vector3 CalculateTargetLookAt()
@@ -28,12 +27,12 @@ public partial class PlayerRotateToDirection : Node
 		LazyUpdateLastInputDir();
 		
 		var dir = lastNonNullDirection;
-		return (player.Transform.Basis * new Vector3(dir.X, 0, dir.Y)).Normalized();
+		return (Player.Transform.Basis * new Vector3(dir.X, 0, dir.Y)).Normalized();
 	}
 
 	private void LazyUpdateLastInputDir()
 	{
-		var dir = player.Input.Direction;
+		var dir = Player.Input.Direction;
 		
 		if (HasDirectionInput(dir)) 
 			lastNonNullDirection = dir;
