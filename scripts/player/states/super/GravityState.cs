@@ -9,6 +9,7 @@ public abstract partial class GravityState : State
     [Export] private int gravityScale = 10;
 
     [Export] private float slowDownSpeed = 10f;
+    [Export] private float lookAtSpeed = 10f;
 
     protected override void PhysicsProcess(float delta)
     {

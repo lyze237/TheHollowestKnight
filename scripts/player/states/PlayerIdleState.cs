@@ -19,10 +19,7 @@ public partial class PlayerIdleState : GroundedState
 	    base.PhysicsProcess(delta);
         
         if (Player.Input.Direction is not { X: 0, Y: 0 })
-        {
-            GD.Print("Change to move");
             StateMachine.ChangeState<PlayerMoveState>();
-        }
     }
 
     protected override string GetAnimationName() =>
