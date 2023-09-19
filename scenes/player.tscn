@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://bbp7clt0ij1k4"]
+
+[ext_resource type="Script" path="res://scripts/player/PlayerReferences.cs" id="1_wx3ag"]
+[ext_resource type="PackedScene" uid="uid://c3ph6y27qlvmj" path="res://models/knight/knight.glb" id="2_qiai3"]
+[ext_resource type="Script" path="res://scripts/stateMachine/StateMachine.cs" id="3_b0s73"]
+[ext_resource type="Script" path="res://scripts/player/states/PlayerIdleState.cs" id="4_7q7gb"]
+[ext_resource type="Script" path="res://scripts/player/PlayerInput.cs" id="5_ood2k"]
+[ext_resource type="Script" path="res://scripts/player/states/PlayerMoveState.cs" id="6_fkl1y"]
+[ext_resource type="Script" path="res://scripts/player/states/PlayerJumpState.cs" id="7_p2oir"]
+[ext_resource type="Script" path="res://scripts/player/states/PlayerInAirState.cs" id="8_hplsf"]
+[ext_resource type="Script" path="res://scripts/player/states/PlayerLandState.cs" id="9_abfbj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwrb5"]
+radius = 0.210656
+height = 1.94642
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Input", "Knight")]
+script = ExtResource("1_wx3ag")
+Input = NodePath("Input")
+Knight = NodePath("Pivot/Knight")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Knight" parent="Pivot" instance=ExtResource("2_qiai3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98038, 0)
+shape = SubResource("CapsuleShape3D_qwrb5")
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("5_ood2k")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "initialState")]
+script = ExtResource("3_b0s73")
+player = NodePath("..")
+initialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_7q7gb")
+
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("pivot")]
+script = ExtResource("6_fkl1y")
+pivot = NodePath("../../Pivot")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("7_p2oir")
+
+[node name="InAir" type="Node" parent="StateMachine" node_paths=PackedStringArray("pivot")]
+script = ExtResource("8_hplsf")
+pivot = NodePath("../../Pivot")
+
+[node name="Land" type="Node" parent="StateMachine"]
+script = ExtResource("9_abfbj")
