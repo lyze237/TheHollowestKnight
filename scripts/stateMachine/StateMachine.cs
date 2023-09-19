@@ -35,6 +35,6 @@ public partial class StateMachine : Node
         debugLabel.Text = CurrentState.GetType().Name;
     }
 
-    private T Get<T>() where T : State =>
+    public T Get<T>() where T : State =>
         GetChildren().First(c => c.GetType() == typeof(T)) as T;
 }

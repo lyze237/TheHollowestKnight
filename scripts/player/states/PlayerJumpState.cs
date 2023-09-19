@@ -6,9 +6,11 @@ namespace TheHollowestKnight.scripts.player.states;
 public partial class PlayerJumpState : PlayerAbilityState
 {
 	[Export] private float jumpVelocity = 20f;
-    
+
     protected override void OnEnable()
     {
+        base.OnEnable();
+
         IsAbilityDone = true;
     }
 

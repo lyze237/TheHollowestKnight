@@ -1,9 +1,10 @@
 ﻿using Godot;
 using TheHollowestKnight.scripts.player.states.super;
+using TheHollowestKnight.scripts.stateMachine;
 
 namespace TheHollowestKnight.scripts.player.states;
 
-public partial class PlayerInAirState : GravityState
+public partial class PlayerInAirState : State
 {
     [Export] private float speed = 10f;
     
@@ -17,10 +18,10 @@ public partial class PlayerInAirState : GravityState
 
     protected override void PhysicsProcess(float delta)
     {
-        base.PhysicsProcess(delta);
-        
         if (Player.IsOnFloor())
             StateMachine.ChangeState<PlayerLandState>();
+        else if (Player.Input.DashJustPressed && StateMachine.Get<PlayerDashState>().CheckIfCanDash())
+            StateMachine.ChangeState<PlayerDashState>();
         
         var velocity = Player.Velocity;
 
