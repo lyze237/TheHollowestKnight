@@ -13,6 +13,8 @@ public partial class StateMachine : Node
     [Export] private State initialState;
     public State CurrentState { get; private set; }
 
+    [Export] private Label3D debugLabel;
+
     public override void _Ready()
     {
         foreach (var child in GetChildren()) 
@@ -29,6 +31,8 @@ public partial class StateMachine : Node
         CurrentState.Disable();
         CurrentState = Get<T>();
         CurrentState.Enable();
+
+        debugLabel.Text = CurrentState.GetType().Name;
     }
 
     private T Get<T>() where T : State =>

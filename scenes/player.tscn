@@ -23,6 +23,11 @@ Knight = NodePath("Pivot/Knight")
 
 [node name="Pivot" type="Node3D" parent="."]
 
+[node name="DebugStateText" type="Label3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.05297, 0)
+pixel_size = 0.01
+text = "Hewwo"
+
 [node name="Knight" parent="Pivot" instance=ExtResource("2_qiai3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
@@ -33,10 +38,11 @@ shape = SubResource("CapsuleShape3D_qwrb5")
 [node name="Input" type="Node" parent="."]
 script = ExtResource("5_ood2k")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "initialState")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "initialState", "debugLabel")]
 script = ExtResource("3_b0s73")
 player = NodePath("..")
 initialState = NodePath("Idle")
+debugLabel = NodePath("../Pivot/DebugStateText")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("4_7q7gb")
