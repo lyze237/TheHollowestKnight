@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bbp7clt0ij1k4"]
+[gd_scene load_steps=23 format=3 uid="uid://bbp7clt0ij1k4"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerReferences.cs" id="1_wx3ag"]
 [ext_resource type="PackedScene" uid="uid://c3ph6y27qlvmj" path="res://models/knight/knight.glb" id="2_qiai3"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/player/components/PlayerGravityComponent.cs" id="12_78gf2"]
 [ext_resource type="Script" path="res://scripts/player/components/PlayerSlowdownComponent.cs" id="13_b4fhh"]
 [ext_resource type="Texture2D" uid="uid://d3rme27fvshuj" path="res://textures/DashParticle.png" id="14_etjui"]
+[ext_resource type="ArrayMesh" uid="uid://b3bm2ct25ydfi" path="res://models/halfSphere/halfSphere_Cube_001.res" id="16_l7hgt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwrb5"]
 radius = 0.210656
@@ -136,3 +137,7 @@ speed_scale = 0.75
 randomness = 0.15
 process_material = SubResource("ParticleProcessMaterial_7dq31")
 draw_pass_1 = SubResource("PlaneMesh_vttq6")
+
+[node name="SwordParticles" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 8.74227e-09, 0, -8.74228e-08, -0.1, 0, 0, 0, 1, 0, 0.969418, -1.32041)
+mesh = ExtResource("16_l7hgt")
